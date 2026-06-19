@@ -2,7 +2,7 @@
 
 Production-style ASP.NET Core (.NET 8) backend project that demonstrates an event-driven order workflow with RabbitMQ, PostgreSQL, Redis, Docker Compose, transactional outbox, idempotent consumers, retry/DLQ handling, observability, tests, and an API gateway.
 
-The repository focuses on repeatable local execution, clear service boundaries, and clear documentation. The demo path uses Docker Compose and startup schema initializers for a clean reset. The production-style path uses EF Core migrations, documented in [`docs/ef-migrations.md`](docs/ef-migrations.md).
+The repository focuses on repeatable local execution, clear service boundaries, and clear documentation. The demo path uses Docker Compose and startup schema initializers for a clean reset. The production-style path uses EF Core migrations.
 
 ---
 
@@ -342,7 +342,7 @@ docker compose -f deploy/docker-compose.yml up -d postgres
 bash scripts/apply-ef-migrations.sh
 ```
 
-Important: do not apply `InitialCreate` to a database already initialized by the runtime startup initializers unless the EF migrations history tables are intentionally baselined. See [`docs/ef-migrations.md`](docs/ef-migrations.md).
+Important: do not apply `InitialCreate` to a database already initialized by the runtime startup initializers unless the EF migrations history tables are intentionally baselined.
 
 ---
 
@@ -368,11 +368,9 @@ Important: do not apply `InitialCreate` to a database already initialized by the
 | File | Purpose |
 | --- | --- |
 | [`docs/testing-strategy.md`](docs/testing-strategy.md) | Two-lane test strategy: no-Docker and Docker-required. |
-| [`docs/live-demo.md`](docs/live-demo.md) | Live-demo runbook and talk track. |
+| [`docs/event-flow.md`](docs/event-flow.md) | Event flow understanding. |
 | [`docs/architecture-diagrams.md`](docs/architecture-diagrams.md) | Mermaid architecture and flow diagrams. |
-| [`docs/ef-migrations.md`](docs/ef-migrations.md) | Migration workflow and clean-DB guidance. |
 | [`docs/reliability.md`](docs/reliability.md) | Reliability patterns and failure handling. |
-| [`docs/api-examples.md`](docs/api-examples.md) | Useful curl examples. |
 
 ---
 ## Production notes and accepted limitations
