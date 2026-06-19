@@ -1,0 +1,380 @@
+{
+  "rabbit_version": "3.13.0",
+  "rabbitmq_version": "3.13.0",
+  "users": [
+    {
+      "name": "guest",
+      "password": "guest",
+      "tags": [
+        "administrator"
+      ]
+    }
+  ],
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "permissions": [
+    {
+      "user": "guest",
+      "vhost": "/",
+      "configure": ".*",
+      "write": ".*",
+      "read": ".*"
+    }
+  ],
+  "topic_permissions": [],
+  "parameters": [],
+  "global_parameters": [],
+  "policies": [],
+  "exchanges": [
+    {
+      "name": "order-platform.exchange",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "order-platform.dlx",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "order-platform.retry.5s.exchange",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "order-platform.retry.30s.exchange",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    },
+    {
+      "name": "order-platform.retry.2m.exchange",
+      "vhost": "/",
+      "type": "topic",
+      "durable": true,
+      "auto_delete": false,
+      "internal": false,
+      "arguments": {}
+    }
+  ],
+  "queues": [
+    {
+      "name": "payment.order-cancelled.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "payment.failed"
+      }
+    },
+    {
+      "name": "inventory.order-created.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "inventory.failed"
+      }
+    },
+    {
+      "name": "payment.inventory-reserved.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "payment.failed"
+      }
+    },
+    {
+      "name": "order.inventory-events.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "inventory.failed"
+      }
+    },
+    {
+      "name": "order.payment-events.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "payment.failed"
+      }
+    },
+    {
+      "name": "inventory.payment-failed.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "inventory.failed"
+      }
+    },
+    {
+      "name": "inventory.order-cancelled.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx",
+        "x-dead-letter-routing-key": "inventory.failed"
+      }
+    },
+    {
+      "name": "notification.order-events.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx"
+      }
+    },
+    {
+      "name": "reporting.all-events.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-dead-letter-exchange": "order-platform.dlx"
+      }
+    },
+    {
+      "name": "retry.5s.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-message-ttl": 5000,
+        "x-dead-letter-exchange": "order-platform.exchange"
+      }
+    },
+    {
+      "name": "retry.30s.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-message-ttl": 30000,
+        "x-dead-letter-exchange": "order-platform.exchange"
+      }
+    },
+    {
+      "name": "retry.2m.queue",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {
+        "x-message-ttl": 120000,
+        "x-dead-letter-exchange": "order-platform.exchange"
+      }
+    },
+    {
+      "name": "inventory.failed.dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "payment.failed.dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "notification.failed.dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    },
+    {
+      "name": "reporting.failed.dlq",
+      "vhost": "/",
+      "durable": true,
+      "auto_delete": false,
+      "arguments": {}
+    }
+  ],
+  "bindings": [
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "inventory.order-created.queue",
+      "destination_type": "queue",
+      "routing_key": "order.created",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "payment.inventory-reserved.queue",
+      "destination_type": "queue",
+      "routing_key": "inventory.reserved",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "inventory.payment-failed.queue",
+      "destination_type": "queue",
+      "routing_key": "payment.failed",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "inventory.order-cancelled.queue",
+      "destination_type": "queue",
+      "routing_key": "order.cancelled",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "notification.order-events.queue",
+      "destination_type": "queue",
+      "routing_key": "order.*",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "notification.order-events.queue",
+      "destination_type": "queue",
+      "routing_key": "payment.*",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "reporting.all-events.queue",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.dlx",
+      "vhost": "/",
+      "destination": "inventory.failed.dlq",
+      "destination_type": "queue",
+      "routing_key": "inventory.#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.dlx",
+      "vhost": "/",
+      "destination": "payment.failed.dlq",
+      "destination_type": "queue",
+      "routing_key": "payment.#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.dlx",
+      "vhost": "/",
+      "destination": "notification.failed.dlq",
+      "destination_type": "queue",
+      "routing_key": "notification.#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.dlx",
+      "vhost": "/",
+      "destination": "reporting.failed.dlq",
+      "destination_type": "queue",
+      "routing_key": "reporting.#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "order.inventory-events.queue",
+      "destination_type": "queue",
+      "routing_key": "inventory.reserved",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "order.inventory-events.queue",
+      "destination_type": "queue",
+      "routing_key": "inventory.reservation_failed",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.retry.5s.exchange",
+      "vhost": "/",
+      "destination": "retry.5s.queue",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.retry.30s.exchange",
+      "vhost": "/",
+      "destination": "retry.30s.queue",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.retry.2m.exchange",
+      "vhost": "/",
+      "destination": "retry.2m.queue",
+      "destination_type": "queue",
+      "routing_key": "#",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "payment.order-cancelled.queue",
+      "destination_type": "queue",
+      "routing_key": "order.cancelled",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "order.payment-events.queue",
+      "destination_type": "queue",
+      "routing_key": "payment.completed",
+      "arguments": {}
+    },
+    {
+      "source": "order-platform.exchange",
+      "vhost": "/",
+      "destination": "order.payment-events.queue",
+      "destination_type": "queue",
+      "routing_key": "payment.failed",
+      "arguments": {}
+    }
+  ]
+}

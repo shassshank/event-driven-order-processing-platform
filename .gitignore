@@ -1,0 +1,35 @@
+# Build outputs
+bin/
+obj/
+TestResults/
+coverage/
+*.trx
+*.coverage
+*.coveragexml
+coverage.cobertura.xml
+
+# User/local IDE files
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.DS_Store
+
+# Logs and local environment
+*.log
+.env
+.env.local
+.env.*.local
+
+# Python/script caches
+__pycache__/
+*.py[cod]
+
+# Docker/local data
+.docker-data/
+
+# k6 summaries
+summary.json

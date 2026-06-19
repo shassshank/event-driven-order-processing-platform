@@ -1,0 +1,13 @@
+.git
+.github
+TestResults
+**/bin
+**/obj
+**/.vs
+**/.vscode
+**/.idea
+**/__pycache__
+*.log
+.env
+.env.local
+README.assets/raw
